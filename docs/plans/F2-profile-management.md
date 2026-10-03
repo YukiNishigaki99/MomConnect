@@ -1,13 +1,13 @@
-# F2 — User Profile Management
+# F2 — Profile Management
 
-> Implementation plan. Source: [docs/MISSING_FEATURES.md](../MISSING_FEATURES.md) — User Profile Management.
+> Implementation plan. Source: [docs/MISSING_FEATURES.md](../MISSING_FEATURES.md) — Profile Management.
 
 ## Metadata
 
 | Field | Value |
 |---|---|
 | **Feature ID** | F2 |
-| **Section** | User Profile Management |
+| **Section** | Profile Management |
 | **Severity** | MAJOR |
 | **Markets** | United States |
 | **Status (today)** | MISSING |

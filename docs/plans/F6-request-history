@@ -1,4 +1,4 @@
-# F6 — Request Lifecycle & History
+# F6 — Request History
 
 > Implementation plan. Source: [docs/MISSING_FEATURES.md](../MISSING_FEATURES.md) §F6.
 
@@ -7,7 +7,7 @@
 | Field | Value |
 |---|---|
 | **Feature ID** | F6 |
-| **Section** | Request Lifecycle & History |
+| **Section** | Request History |
 | **Severity** | MAJOR |
 | **Markets** | United States |
 | **Status (today)** | MISSING |

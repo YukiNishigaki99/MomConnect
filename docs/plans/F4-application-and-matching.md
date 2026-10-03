@@ -1,4 +1,4 @@
-# F4 — Application & Matching Workflow
+# F4 — Application & Matching
 
 > Implementation plan. Source: [docs/MISSING_FEATURES.md](../MISSING_FEATURES.md) §F4.
 
@@ -7,7 +7,7 @@
 | Field | Value |
 |---|---|
 | **Feature ID** | F4 |
-| **Section** | Application & Matching Workflow |
+| **Section** | Application & Matching |
 | **Severity** | BLOCKER |
 | **Markets** | Local community |
 | **Status (today)** | MISSING |

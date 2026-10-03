@@ -11,11 +11,11 @@
 
 ## 3. MVP Features (Minimum Viable Product)
 - **User Authentication & Role Setup:** Register, log in, and select role (`Requester Mom` / `Senior Mom`).
-- **User Profile Management:** Set location (municipality), bio, and view other users' profiles.
+- **Profile Management:** Set location (municipality), bio, and view other users' profiles.
 - **Support Board (Requests & Offers):** Create, browse, and filter posts by municipality and post type (`Need Help` / `Can Help`).
-- **Application & Matching Workflow:** Apply to a post, review applicants, and approve to create a match.
+- **Application & Matching:** Apply to a post, review applicants, and approve to create a match.
 - **Private Messaging:** Private chat thread unlocked for matched pairs to finalize details.
-- **Request Lifecycle & History:** Track status (`Open` → `Matched` → `Completed`) and view activity history in My Page.
+- **Request History:** Track status (`Open` → `Matched` → `Completed`) and view activity history in My Page.
 
 ## 4. Future / Optional Features (Out of Scope for MVP)
 - Two-way star rating and review system

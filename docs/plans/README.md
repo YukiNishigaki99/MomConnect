@@ -1,49 +1,31 @@
-# MomConnect
+# Feature Implementation Sequence
 
-## Project Overview
+## 1. Feature Inventory & Implementation Order
 
-MomConnect is a community support platform designed to connect mothers seeking childcare support with experienced mothers in their local communities.
+| Order | Feature ID | Feature Name | Depends On | Why This Order |
+| :---: | :--- | :--- | :--- | :--- |
+| **1** | `F1-auth` | User Authentication | None | Unlocks protected routes and session management needed by all other features. |
+| **2** | `F2-profile` | Profile Management | `F1-auth` | Establishes core user data used in posts and applications. |
+| **3** | `F3-board` | Support Board | `F1-auth`, `F2-profile` | Enables creating and browsing support requests, which forms the main feed. |
+| **4** | `F4-matching` | Application & Matching | `F3-board` | Requires existing support posts for users to apply and match. |
+| **5** | `F5-messaging` | Private Messaging | `F4-matching` | Unlocks private communication only after a match is approved. |
+| **6** | `F6-history` | Request History | `F3-board` | Tracks and displays past support request statuses and activities. |
 
-The goal is to make it easier for mothers to find practical support, build connections, and share childcare responsibilities.
+---
 
-## Core Features
+## 2. First Feature Choice Reason
 
-- **User Authentication:** Register and log in securely.
-- **User Profile Management:** Create and manage personal profiles.
-- **Support Board:** Create and browse support requests and offers.
-- **Application & Matching Workflow:** Apply to a post, review applicants, and approve to create a match.
-- **Private Messaging:** Private chat thread unlocked for matched pairs to finalize details.
-- **Request Lifecycle & History:** Track support request statuses and view previous activities.
+* **First Feature:** `F1-auth` (User Authentication)
+* **Reason:** Session management and user identification are fundamental prerequisites for all downstream features. Without auth, we cannot enforce access controls, associate database records with users, or effectively test authenticated routes.
 
-## User Flows
+---
 
-**Requesting Support**
-1. Create a support request.
-2. Receive applications from other users.
-3. Review and approve suitable applicants.
-4. Communicate privately with approved applicants.
-5. Manage the request and review its history.
+## 3. Multi-Feature Risks
 
-**Offering Support**
-1. Browse available support requests.
-2. Apply to requests that match your availability.
-3. Communicate with the requester after approval.
-4. Participate in the agreed support activity.
+1. **Changes to Authentication Logic (`F1-auth`)**
+   * **Risk:** Any structural change to JWT tokens or session handling later in development will break API requests and middleware across `F2` through `F6`.
+   * **Mitigation:** Encapsulate auth logic early and standardize the API response format for authenticated endpoints.
 
-## Project Documentation
-
-Detailed requirements and implementation plans are available in the following documents:
-
-- [Project Specification](docs/PROJECT_SPECIFICATION.md)
-- [Feature Inventory](docs/FEATURE_INVENTORY.md)
-- [Feature Plans](docs/plans/)
-
-## Development Approach
-
-MomConnect is developed incrementally, with features planned and implemented in manageable stages.
-
-Each feature plan defines its scope, requirements, dependencies, and acceptance criteria to help keep implementation aligned with the project specification.
-
-## Project Status
-
-This project is under development. Features are planned and implemented incrementally, with the initial focus on the core support and matching workflow.
+2. **Matching & Data State Inconsistencies (`F4-matching`)**
+   * **Risk:** Modifications to match status data models will simultaneously impact both the messaging permissions (`F5-messaging`) and the request history tracking (`F6-history`).
+   * **Mitigation:** Clearly define match status enums and state transitions prior to implementing dependent features.
