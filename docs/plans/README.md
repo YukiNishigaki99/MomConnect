@@ -31,20 +31,20 @@ The following features define the current development plan for MomConnect.
 | Feature ID | Feature Name | Description |
 |---|---|---|
 | F1 | User Authentication | Allow users to register and sign in using supported authentication providers. |
-| F2 | Create Support Request | Allow new mothers to post requests describing the help they need. |
-| F3 | Create Support Offer | Allow experienced mothers to describe the support they can provide. |
-| F4 | Apply for Support | Allow users to apply for available support requests or offers. |
-| F5 | Manage Support Activities | Allow users to manage their support activities and related information. |
+| F2 | User Profile Management | Allow registered users to create and maintain thier profiles. |
+| F3 | Browse Support Requests And Offers | Allow authenticated users to browse active support requests and offers. |
+| F4 | Application And Matching Management | Allow users to apply to requests and offers. |
+| F5 | Private Messaging | Allow matched users to exchange private text messages. |
 
 ## Feature Plans
 
 Detailed implementation plans are maintained in the `docs/` directory.
 
-- [F1 — User Authentication](docs/features/F1-user-authentication.md)
-- [F2 — Create Support Request](docs/features/F2-create-support-request.md)
-- [F3 — Create Support Offer](docs/features/F3-create-support-offer.md)
-- [F4 — Apply for Support](docs/features/F4-apply-for-support.md)
-- [F5 — Manage Support Activities](docs/features/F5-manage-support-activities.md)
+- [F1 — User Authentication](docs/plans/F1-user-authentication.md)
+- [F2 — User Profile Management](docs/plans/F2-user-profile-management.md)
+- [F3 — Browse Support Requests And Offers](docs/plans/F3-browse-support-requests-and-offers.md)
+- [F4 - Application And Matching Management](docs/plans/F4-application-and-matching-management.md)
+- [F5 — Private Messaging](docs/plans/F5-private-messaging.md)
 
 *Note: Update the file paths above to match the actual names and locations of your Feature Plan files.*
 
