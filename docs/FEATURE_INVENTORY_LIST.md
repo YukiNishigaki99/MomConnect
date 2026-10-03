@@ -1,111 +1,30 @@
 # MomConnect — Feature Inventory List
 
-## Project Overview
+## Overview
 
-MomConnect is a community support platform that connects new mothers with experienced mothers who can provide practical help and support.
+This document lists the core features included in the MomConnect MVP and links to their individual implementation plans.
 
-Users can request support, offer support, apply for support opportunities, and communicate privately before deciding whether to move forward.
+## Feature Inventory
 
-## MVP Features
-
-The following features are included in the Minimum Viable Product (MVP).
-
-| Feature ID | Feature Name | Description | Type | Priority |
+| Feature ID | Feature Name | Description | Priority | Feature Plan |
 |---|---|---|---|---|
-| F1 | User Authentication | Allow users to register and sign in using supported authentication providers. | Infrastructure/Supporting | Must Have |
-| F2 | Create Support Request | Allow new mothers to create and manage posts describing the support they need. | Blocked by F1 | Must Have |
-| F3 | Create Support Offer | Allow experienced mothers to create and manage posts describing the support they can provide. | Blocked by F1 | Must Have |
-| F4 | Apply for Support | Allow users to browse support requests and offers, apply for suitable opportunities, and allow post creators to approve or reject applications. | Blocked by F2 and F3 | Must Have |
-| F5 | Private Messaging | Allow authenticated users to communicate privately about support requests and offers before deciding whether to proceed. | Blocked by F1, F2, and F3 | Must Have |
+| F1 | User Authentication | Register, log in, and access the application securely. | Must-have | [F1 Plan](plans/F1-user-authentication.md) |
+| F2 | User Profile Management | Create and manage user profiles, including basic information and municipality. | Must-have | [F2 Plan](plans/F2-user-profile-management.md) |
+| F3 | Support Board | Create, browse, and filter support requests and offers. | Must-have | [F3 Plan](plans/F3-support-board.md) |
+| F4 | Application & Matching | Apply to support requests and allow request creators to approve or reject applications. | Must-have | [F4 Plan](plans/F4-application-and-matching-management.md) |
+| F5 | Direct Messaging | Enable private one-to-one messaging between users after an application is approved. | Must-have | [F5 Plan](plans/F5-private-messaging.md) |
+| F6 | Request Lifecycle & History | Manage request statuses, including completion and cancellation, and maintain request history. | Must-have | [F6 Plan](plans/F6-request-lifecycle-and-history.md) |
 
-## Feature Details
+## Dependencies
 
-### F1 — User Authentication
-- Allow users to register and sign in.
-- Support selected authentication providers.
-- Associate user activities with the correct account.
+- F1 is required before most other features can be used.
+- F2 and F3 provide the user and support-post information needed for matching.
+- F4 depends on F1 and F3.
+- F5 depends on F4 because private conversations are available after an application is approved.
+- F6 depends on F3 and F4 to manage request statuses and history.
 
-### F2 — Create Support Request
-- Allow new mothers to describe the help they need.
-- Allow users to view available support requests.
-- Allow request creators to manage their own posts.
+## Scope
 
-### F3 — Create Support Offer
-- Allow experienced mothers to describe the support they can provide.
-- Allow users to view available support offers.
-- Allow offer creators to manage their own posts.
+The MVP focuses on the core support workflow: creating support posts, applying for support, approving applicants, communicating privately, and managing request status and history.
 
-### F4 — Apply for Support
-- Allow experienced mothers to apply for support requests.
-- Allow new mothers to apply for support offers.
-- Allow post creators to approve or reject applications.
-- Display application statuses to the relevant users.
-
-### F5 — Private Messaging
-- Allow users to send private text messages.
-- Allow users to view their conversation history.
-- Allow users to discuss support needs, experiences, expectations, and arrangements.
-- Support communication before an application is submitted or approved.
-- Restrict conversations to their intended participants.
-
-Private messaging helps users learn more about one another before arranging support. However, conversations alone cannot verify a person's identity or guarantee their trustworthiness.
-
-## MVP User Flows
-
-### Flow 1: Requesting Support
-
-1. A new mother signs in.
-2. She creates a support request.
-3. An experienced mother discovers the request.
-4. They can communicate privately to discuss the request.
-5. The experienced mother applies for the request.
-6. The new mother approves or rejects the application.
-
-### Flow 2: Offering Support
-
-1. An experienced mother signs in.
-2. She creates a support offer.
-3. A new mother discovers the offer.
-4. They can communicate privately to discuss the support.
-5. The new mother applies for the offer.
-6. The experienced mother approves or rejects the application.
-
-## Implementation Dependencies
-
-The planned implementation order is:
-
-1. **F1 — User Authentication:** Establish user accounts and authentication.
-2. **F2 — Create Support Request:** Implement support request creation and management.
-3. **F3 — Create Support Offer:** Implement support offer creation and management.
-4. **F4 — Apply for Support:** Implement applications and application decisions.
-5. **F5 — Private Messaging:** Implement private conversations associated with support requests and offers.
-
-F2 and F3 both depend on authentication. F4 requires support requests and offers to exist. F5 requires authenticated users and a way to associate conversations with relevant support requests or offers.
-
-**Important:** F5 must support communication before application approval. Therefore, private messaging should not depend on a completed match or an approved application.
-
-## Out of Scope for the MVP
-
-The following features are not included in the current MVP:
-
-- Payment processing.
-- AI-powered matching.
-- Advanced recommendation algorithms.
-- User reviews and ratings.
-- Video and voice calling.
-- Automated identity verification.
-- Advanced notification preferences.
-
-These features may be considered for future development.
-
-## MVP Success Criteria
-
-The MVP should allow users to:
-
-- Register and sign in.
-- Create and discover support requests.
-- Create and discover support offers.
-- Apply for support and approve or reject applications.
-- Communicate privately before deciding whether to proceed.
-
-The MVP is complete when these core user flows work as intended and users can participate in both requesting and offering support.
+Additional features outside this scope can be considered for future development.

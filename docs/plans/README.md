@@ -1,82 +1,50 @@
-# MomConnect — Feature Plan Portfolio
+# MomConnect
 
 ## Project Overview
 
-MomConnect is a community support platform designed to connect new mothers with experienced mothers who can offer practical help and emotional support during early motherhood.
+MomConnect is a community support platform designed to connect mothers seeking childcare support with experienced mothers in their local communities.
 
-The platform allows new mothers to request support and experienced mothers to offer help based on their skills, experiences, and availability.
+The goal is to make it easier for mothers to find practical support, build connections, and share childcare responsibilities.
 
-## Project Goals
+## Core Features
 
-The goal of MomConnect is to make it easier for mothers to find and offer support within their community.
+- **User Authentication:** Register and log in securely.
+- **User Profile Management:** Create and manage personal profiles.
+- **Support Board:** Create and browse support requests and offers.
+- **Application & Matching Workflow:** Apply to a post, review applicants, and approve to create a match.
+- **Private Messaging:** Private chat thread unlocked for matched pairs to finalize details.
+- **Request Lifecycle & History:** Track support request statuses and view previous activities.
 
-The platform aims to:
-- Help new mothers find practical support during early motherhood.
-- Allow experienced mothers to share their knowledge and experience.
-- Connect mothers who need help with mothers who can provide it.
-- Make requesting and offering support simple and accessible.
+## User Flows
 
-## Target Users
+**Requesting Support**
+1. Create a support request.
+2. Receive applications from other users.
+3. Review and approve suitable applicants.
+4. Communicate privately with approved applicants.
+5. Manage the request and review its history.
 
-### New Mothers
-Mothers who need practical help, advice, or emotional support during early motherhood.
+**Offering Support**
+1. Browse available support requests.
+2. Apply to requests that match your availability.
+3. Communicate with the requester after approval.
+4. Participate in the agreed support activity.
 
-### Experienced Mothers
-Mothers who want to support other mothers by sharing their experiences, offering practical help, or providing companionship.
+## Project Documentation
 
-## Planned Features
+Detailed requirements and implementation plans are available in the following documents:
 
-The following features define the current development plan for MomConnect.
+- [Project Specification](docs/PROJECT_SPECIFICATION.md)
+- [Feature Inventory](docs/FEATURE_INVENTORY.md)
+- [Missing Features & Requirements](docs/MISSING_FEATURES.md)
+- [Feature Plans](docs/plans/)
 
-| Feature ID | Feature Name | Description |
-|---|---|---|
-| F1 | User Authentication | Allow users to register and sign in using supported authentication providers. |
-| F2 | User Profile Management | Allow registered users to create and maintain thier profiles. |
-| F3 | Browse Support Requests And Offers | Allow authenticated users to browse active support requests and offers. |
-| F4 | Application And Matching Management | Allow users to apply to requests and offers. |
-| F5 | Private Messaging | Allow matched users to exchange private text messages. |
+## Development Approach
 
-## Feature Plans
+MomConnect is developed incrementally, with features planned and implemented in manageable stages.
 
-Detailed implementation plans are maintained in the `docs/` directory.
-
-- [F1 — User Authentication](docs/plans/F1-user-authentication.md)
-- [F2 — User Profile Management](docs/plans/F2-user-profile-management.md)
-- [F3 — Browse Support Requests And Offers](docs/plans/F3-browse-support-requests-and-offers.md)
-- [F4 - Application And Matching Management](docs/plans/F4-application-and-matching-management.md)
-- [F5 — Private Messaging](docs/plans/F5-private-messaging.md)
-
-*Note: Update the file paths above to match the actual names and locations of your Feature Plan files.*
+Each feature plan defines its scope, requirements, dependencies, and acceptance criteria to help keep implementation aligned with the project specification.
 
 ## Project Status
 
-**Current Stage:** Feature Planning
-
-The project is currently in the planning stage. The feature requirements and implementation plans are being documented before development begins.
-
-The planned features will guide future implementation and testing.
-
-## Scope and Limitations
-
-This portfolio focuses on planning the features required for the initial version of MomConnect.
-
-Additional features may be considered in future iterations based on project requirements and available development time.
-
-## Future Improvements
-
-Potential future improvements may include:
-- User reviews and feedback.
-- Notifications for support applications and updates.
-- Additional tools for community engagement.
-
-These improvements are not part of the current feature plan unless explicitly added to the project requirements.
-
-## Technology
-
-The final technology stack will be documented as implementation decisions are made.
-
-Authentication providers and backend services will be selected based on the project's requirements.
-
-## License
-
-This project is being developed as part of an academic software development project.
+This project is under development. Features are planned and implemented incrementally, with the initial focus on the core support and matching workflow.

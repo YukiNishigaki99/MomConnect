@@ -1,0 +1,146 @@
+# F6 — Request Lifecycle & History
+
+> Implementation plan. Source: [docs/MISSING_FEATURES.md](../MISSING_FEATURES.md) §F6.
+
+## Metadata
+
+| Field | Value |
+|---|---|
+| **Feature ID** | F6 |
+| **Section** | Request Lifecycle & History |
+| **Severity** | MAJOR |
+| **Markets** | United States |
+| **Status (today)** | MISSING |
+| **Estimated effort** | S (1w) |
+| **Owner (proposed)** | Full-stack developer |
+| **Depends on** | F1, F2, F3, F4 |
+| **Unblocks** | None |
+
+---
+
+## 1. Problem Statement
+
+Users need to track the progress of their support requests and offers. Without lifecycle management, users cannot easily identify completed or cancelled activities. This feature provides clear status tracking and an activity history through My Page.
+
+## 2. Goals
+
+- Track support post statuses: `open`, `matched`, `completed`, and `cancelled`.
+- Allow post owners to mark matched posts as completed.
+- Allow post owners to cancel open posts.
+- Display current statuses and activity history on My Page.
+
+## 3. Non-Goals
+
+- Application and approval workflows (F4).
+- Private messaging (F5).
+- Notifications and automated reminders.
+
+## 4. Personas & User Stories
+
+- **As a post owner**, I want to update my post's status so that I can track its progress.
+- **As a participating mother**, I want to see whether a support activity is completed or cancelled.
+- **As a user**, I want to view my past support activities so that I can review my history.
+
+## 5. Functional Requirements
+
+- **FR-1.** The system MUST support `open`, `matched`, `completed`, and `cancelled` statuses.
+- **FR-2.** The system MUST allow post owners to mark matched posts as completed.
+- **FR-3.** The system MUST allow post owners to cancel eligible posts.
+- **FR-4.** The system MUST display users' support activities and their statuses on My Page.
+- **FR-5.** The system MUST restrict status updates to authorized users and valid transitions.
+
+## 6. Non-Functional Requirements
+
+- **Performance** — Status updates and history retrieval SHOULD complete within 500 ms at p95 under normal load.
+- **Security** — Authenticated users MUST only update posts they own.
+- **Privacy & Compliance** — Only authorized participants may access relevant activity details.
+- **Accessibility** — New UI MUST meet WCAG 2.1 AA.
+- **Reliability** — Invalid transitions MUST be rejected without changing the stored status.
+- **Maintainability** — Follow existing project conventions.
+- **Internationalization** — Status labels MUST support localization.
+
+## 7. Acceptance Criteria
+
+- **AC-1.** Given a matched post owned by a user, when the owner marks it completed, then its status becomes `completed`.
+- **AC-2.** Given an open post owned by a user, when the owner cancels it, then its status becomes `cancelled`.
+- **AC-3.** Given a user with past support activities, when they open My Page, then they can view their activities and current statuses.
+- **AC-4.** Given an unauthorized user or invalid transition, when a status update is attempted, then the system rejects it.
+
+## 8. Data Model
+
+- Use the existing Posts model and status field where available.
+- Support the statuses `open`, `matched`, `completed`, and `cancelled`.
+- Add an activity history table only if required by the existing data model.
+- Use `server/migrations/NNN_*.sql` for schema changes.
+- Backfill existing posts with the appropriate initial status.
+
+## 9. API Surface
+
+- `PATCH /api/posts/:id/status` — Update a post's status; authenticated post owner only.
+- `GET /api/users/me/activity` — Retrieve the current user's support activity history.
+- Validate status transitions and document endpoints in OpenAPI.
+
+## 10. UI / UX
+
+- Display status labels on support posts.
+- Add a status update action for eligible posts.
+- Add an activity history section to My Page.
+- Include loading, empty, and error states.
+- Ensure responsive layouts and accessible controls.
+
+## 11. AI / ML Considerations
+
+Not applicable.
+
+## 12. Integration Points
+
+- Posts and user data models.
+- F4 Application & Matching Workflow.
+- My Page and support board UI.
+
+## 13. Dependencies & Sequencing
+
+- **Must ship after:** F1, F2, F3, F4.
+- **Must ship before:** None.
+- **Shared infrastructure:** Existing database and authentication.
+
+## 14. Risks & Mitigations
+
+| Risk | Likelihood | Impact | Mitigation |
+|---|---|---|---|
+| Invalid status transitions | M | H | Enforce transition rules on the server. |
+| Unauthorized status updates | M | H | Verify ownership and permissions. |
+| Incomplete activity history | M | M | Test history retrieval across lifecycle states. |
+
+## 15. Rollout Plan
+
+- Deploy database changes before dependent code, if required.
+- Test with existing development data.
+- Enable the feature after lifecycle and authorization tests pass.
+- Roll back code and migrations safely if deployment fails.
+
+## 16. Test Plan
+
+- **Unit** — Status transitions and authorization rules.
+- **Integration** — Status updates and activity history retrieval.
+- **End-to-end** — Complete and cancel posts; verify My Page history.
+- **Security** — Reject unauthorized updates.
+- **Accessibility** — Check keyboard navigation and accessible status labels.
+- **Manual** — Verify lifecycle flows on desktop and mobile.
+
+## 17. Documentation & Training
+
+- Document status meanings and available actions for users.
+- Update API documentation.
+- Document status transition rules for developers.
+
+## 18. Open Questions
+
+1. Should completed and cancelled posts remain visible indefinitely in My Page?
+2. Should status changes be recorded in a separate audit log?
+
+## 19. References
+
+- `docs/MISSING_FEATURES.md`
+- `docs/plans/` — Related feature plans for F1–F5.
+- Related features: F3 Support Board, F4 Application & Matching Workflow, F5 Private Messaging.
