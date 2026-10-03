@@ -9,7 +9,7 @@
 | **Feature ID** | F1 |
 | **Section** | User Authentication |
 | **Severity** | BLOCKER |
-| **Markets** | United States |
+| **Markets** | Mothers seeking or providing local childcare support |
 | **Status (today)** | MISSING |
 | **Estimated effort** | S (1w) |
 | **Owner (proposed)** | Development Team |
@@ -171,8 +171,5 @@ Not applicable.
 
 ## 19. References
 
+- [README](README.md)
 - [Project Specification](../PROJECT_SPECIFICATION.md)
-- [Feature Inventory List](../FEATURE_INVENTORY.md)
-- [Missing Features](../MISSING_FEATURES.md)
-- [Feature Plan Template](https://wdd430.netlify.app/files/_template.md)
-- Related plans: F2, F3, F4, F5.

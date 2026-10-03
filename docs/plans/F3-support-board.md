@@ -9,7 +9,7 @@
 | **Feature ID** | F3 |
 | **Section** | Support Board |
 | **Severity** | BLOCKER |
-| **Markets** | United States |
+| **Markets** | Mothers seeking or providing local childcare support |
 | **Status (today)** | MISSING |
 | **Estimated effort** | M |
 | **Owner (proposed)** | Development Team |
@@ -147,6 +147,5 @@ Not applicable.
 
 ## 19. References
 
-- `docs/MISSING_FEATURES.md`
-- `docs/plans/` — Related feature plans for F1, F2, F4, F5, and F6.
-- Project Specification: MomConnect (Refined Draft).
+- [README](README.md)
+- [Project Specification](../PROJECT_SPECIFICATION.md)

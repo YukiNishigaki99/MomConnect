@@ -9,7 +9,7 @@
 | **Feature ID** | F4 |
 | **Section** | Application & Matching |
 | **Severity** | BLOCKER |
-| **Markets** | Local community |
+| **Markets** | Mothers seeking or providing local childcare support |
 | **Status (today)** | MISSING |
 | **Estimated effort** | M (2–4w) |
 | **Owner (proposed)** | Development Team |
@@ -146,7 +146,5 @@ Not applicable. Matching decisions are made by users.
 
 ## 19. References
 
+- [README](README.md)
 - [Project Specification](../PROJECT_SPECIFICATION.md)
-- [Feature Inventory](../FEATURE_INVENTORY.md)
-- [Missing Features](../MISSING_FEATURES.md)
-- Related plans: F1, F2, F3, F5, F6.

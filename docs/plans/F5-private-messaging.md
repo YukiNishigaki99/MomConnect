@@ -9,7 +9,7 @@
 | **Feature ID** | F5 |
 | **Section** | Private Messaging |
 | **Severity** | BLOCKER |
-| **Markets** | United States |
+| **Markets** | Mothers seeking or providing local childcare support |
 | **Status (today)** | MISSING |
 | **Estimated effort** | M (2–4w) |
 | **Owner (proposed)** | Development Team |
@@ -143,7 +143,5 @@ Not applicable.
 
 ## 19. References
 
-- `../PROJECT_SPECIFICATION.md`
-- `../FEATURE_INVENTORY.md`
-- `../MISSING_FEATURES.md`
-- Related plans: `F1-authentication.md`, `F3-support-board.md`, `F4-support-application.md`
+- [README](README.md)
+- [Project Specification](../PROJECT_SPECIFICATION.md)

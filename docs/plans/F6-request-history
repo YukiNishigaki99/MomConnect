@@ -9,10 +9,10 @@
 | **Feature ID** | F6 |
 | **Section** | Request History |
 | **Severity** | MAJOR |
-| **Markets** | United States |
+| **Markets** | Mothers seeking or providing local childcare support |
 | **Status (today)** | MISSING |
 | **Estimated effort** | S (1w) |
-| **Owner (proposed)** | Full-stack developer |
+| **Owner (proposed)** | Development Team |
 | **Depends on** | F1, F2, F3, F4 |
 | **Unblocks** | None |
 
@@ -141,6 +141,5 @@ Not applicable.
 
 ## 19. References
 
-- `docs/MISSING_FEATURES.md`
-- `docs/plans/` — Related feature plans for F1–F5.
-- Related features: F3 Support Board, F4 Application & Matching Workflow, F5 Private Messaging.
+- [README](README.md)
+- [Project Specification](../PROJECT_SPECIFICATION.md)

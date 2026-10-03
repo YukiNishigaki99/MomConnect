@@ -9,7 +9,7 @@
 | **Feature ID** | F2 |
 | **Section** | Profile Management |
 | **Severity** | MAJOR |
-| **Markets** | United States |
+| **Markets** | Mothers seeking or providing local childcare support |
 | **Status (today)** | MISSING |
 | **Estimated effort** | S (1w) |
 | **Owner (proposed)** | Individual / Team |
@@ -176,10 +176,5 @@ Not applicable. This feature does not require AI or machine learning.
 
 ## 19. References
 
-- `docs/MISSING_FEATURES.md` — User Profile Management.
-- Project Specification — MVP Features.
-- F1 — User Authentication & Role Setup.
-- F3 — Support Board (Requests & Offers).
-- F4 — Application & Matching Workflow.
-- F5 — 1-on-1 Messaging.
-- F6 — Request Lifecycle & History.
+- [README](README.md)
+- [Project Specification](../PROJECT_SPECIFICATION.md)
