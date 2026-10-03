@@ -36,7 +36,6 @@ Detailed requirements and implementation plans are available in the following do
 
 - [Project Specification](docs/PROJECT_SPECIFICATION.md)
 - [Feature Inventory](docs/FEATURE_INVENTORY.md)
-- [Missing Features & Requirements](docs/MISSING_FEATURES.md)
 - [Feature Plans](docs/plans/)
 
 ## Development Approach
