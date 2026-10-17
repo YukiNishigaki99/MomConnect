@@ -1,0 +1,22 @@
+{
+  "node": {
+    "60e86f35cd8e47c5d29ff4403aa8c14c81e6d512": {
+      "workers": {
+        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fyukinishigaki%2FBYUI%2FWDD430%2F1%2FMomConnect%2Fapp%2Fpage.tsx%22%2C%5B%22%24%24ACTION_1%22%2C%22%24%24ACTION_0%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    },
+    "6c4271361cd149f44a7fa25a781c74f15e5b6cbb": {
+      "workers": {
+        "app/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fyukinishigaki%2FBYUI%2FWDD430%2F1%2FMomConnect%2Fapp%2Fpage.tsx%22%2C%5B%22%24%24ACTION_1%22%2C%22%24%24ACTION_0%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/page": "rsc"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "Wb3u1tbOv/YOqFMuwp23Qx+sb2ZpqmPyRjTp2pSUUzM="
+}

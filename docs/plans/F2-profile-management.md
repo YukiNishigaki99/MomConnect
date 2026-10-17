@@ -18,7 +18,7 @@
 
 ## 1. Problem Statement
 
-MomConnect users need profiles to introduce themselves and understand who they may connect with. Without profile management, users cannot share their municipality or a short bio, or view other users' profiles before engaging in the support process.
+MotherConnect users need profiles to introduce themselves and understand who they may connect with. Without profile management, users cannot share their municipality or a short bio, or view other users' profiles before engaging in the support process.
 
 ## 2. Goals
 

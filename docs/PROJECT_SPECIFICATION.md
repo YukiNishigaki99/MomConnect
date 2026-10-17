@@ -1,7 +1,7 @@
-# Project Specification: MomConnect (Refined Draft)
+# Project Specification: MotherConnect (Refined Draft)
 
 ## 1. Project Overview
-- **Project Name:** MomConnect (Community Childcare Support & Matching App)
+- **Project Name:** MotherConnect (Community Childcare Support & Matching App)
 - **Objective:** Connect solo-parenting mothers with experienced "senior moms" in the local community for short-term childcare support through a mutual support bulletin board.
 
 ## 2. Target Users

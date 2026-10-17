@@ -20,7 +20,7 @@
 
 ## 1. Problem Statement
 
-MomConnect needs authentication so users can create accounts and access features securely. Authentication allows the application to identify users and associate their activities with the correct accounts.
+MotherConnect needs authentication so users can create accounts and access features securely. Authentication allows the application to identify users and associate their activities with the correct accounts.
 
 ## 2. Goals
 
@@ -165,7 +165,7 @@ Not applicable.
 
 ## 18. Open Questions
 
-1. Should MomConnect use Firebase Authentication or Supabase Auth?
+1. Should MotherConnect use Firebase Authentication or Supabase Auth?
 2. Should the MVP support Google sign-in, Facebook sign-in, or both?
 3. When should users select their roles?
 
