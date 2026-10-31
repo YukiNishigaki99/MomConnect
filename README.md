@@ -1,5 +1,5 @@
 
-# Project Specification: MomConnect (Refined Draft)
+# Project Specification: MotherConnect
 
 ## 1. Project Overview
 - **Project Name:** MomConnect (Community Childcare Support & Matching App)
