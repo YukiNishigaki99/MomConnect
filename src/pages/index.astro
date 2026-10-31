@@ -1,0 +1,195 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="MotherConnect - Support Board">
+  <div class="max-w-2xl mx-auto py-8 px-4">
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <h1 class="text-2xl font-bold text-slate-800">Support Board</h1>
+        <p class="text-xs text-slate-500 mt-1">A community board for parenting questions, helpful information, and sharing with others.</p>
+      </div>
+      <a 
+        href="/posts/new" 
+        class="bg-pink-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-pink-700 transition shadow-sm"
+      >
+        + New Post
+      </a>
+    </div>
+
+    <div id="posts-container" class="space-y-6">
+      <div id="loading" class="text-center py-8 text-sm text-slate-400">
+        Loading posts...
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { supabase } from '../lib/supabase';
+
+  const container = document.getElementById('posts-container');
+  const loading = document.getElementById('loading');
+
+  async function fetchPosts() {
+    // 投稿、投稿者プロフィール、およびコメント（＋コメントの投稿者プロフィール）を一緒に取得
+    const { data: posts, error } = await supabase
+      .from('posts')
+      .select(`
+        id,
+        title,
+        content,
+        post_type,
+        created_at,
+        profiles (
+          nickname
+        ),
+        comments (
+          id,
+          content,
+          created_at,
+          profiles (
+            nickname
+          )
+        )
+      `)
+      .order('created_at', { ascending: false });
+
+    if (loading) {
+      loading.remove();
+    }
+
+    if (error) {
+      console.error('Error fetching posts:', error);
+      if (container) {
+        container.innerHTML = `<p class="text-xs text-red-600 text-center">Failed to load posts.</p>`;
+      }
+      return;
+    }
+
+    if (!posts || posts.length === 0) {
+      if (container) {
+        container.innerHTML = `
+          <div class="text-center py-12 bg-white border border-slate-200 rounded-xl">
+            <p class="text-sm text-slate-500">There are no posts yet. Why not create the first one?</p>
+          </div>
+        `;
+      }
+      return;
+    }
+
+    if (container) {
+      container.innerHTML = posts.map((post: any) => {
+        const isRequest = post.post_type === 'request';
+        const badgeClass = isRequest 
+          ? 'bg-blue-50 text-blue-700 border-blue-200' 
+          : 'bg-emerald-50 text-emerald-700 border-emerald-200';
+        const badgeText = isRequest ? 'Request' : 'Offer';
+        const nickname = post.profiles?.nickname || 'Anonymous Mom';
+        const dateStr = new Date(post.created_at).toLocaleDateString('ja-JP');
+
+        // コメント一覧のHTML生成
+        const commentsHtml = post.comments && post.comments.length > 0
+          ? post.comments.map((c: any) => `
+              <div class="bg-slate-50 border border-slate-100 rounded-lg p-3 text-xs">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="font-semibold text-slate-700">${escapeHtml(c.profiles?.nickname || 'Anonymous Mom')}</span>
+                  <span class="text-slate-400 text-[10px]">${new Date(c.created_at).toLocaleDateString('ja-JP')}</span>
+                </div>
+                <p class="text-slate-600 whitespace-pre-wrap">${escapeHtml(c.content)}</p>
+              </div>
+            `).join('')
+          : `<p class="text-xs text-slate-400 italic">There are no comments yet.</p>`;
+
+        return `
+          <div class="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full border ${badgeClass}">
+                ${badgeText}
+              </span>
+              <span class="text-xs text-slate-400">${dateStr}</span>
+            </div>
+            <h2 class="text-base font-bold text-slate-800 mb-1">${escapeHtml(post.title)}</h2>
+            <p class="text-sm text-slate-600 whitespace-pre-wrap mb-4">${escapeHtml(post.content)}</p>
+            <div class="flex items-center justify-between text-xs text-slate-500 pt-3 border-t border-slate-100 mb-4">
+              <span>By <strong>${escapeHtml(nickname)}</strong></span>
+            </div>
+
+            <!-- コメントセクション -->
+            <div class="mt-4 pt-4 border-t border-slate-100 space-y-3">
+              <h3 class="text-xs font-bold text-slate-700">Comments</h3>
+              <div class="space-y-2">
+                ${commentsHtml}
+              </div>
+
+              <!-- コメント投稿フォーム -->
+              <form class="comment-form flex gap-2 mt-3" data-post-id="${post.id}">
+                <input 
+                  type="text" 
+                  name="comment" 
+                  required 
+                  placeholder="Write a comment..." 
+                  class="flex-1 text-xs border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-pink-500"
+                />
+                <button 
+                  type="submit" 
+                  class="bg-slate-800 text-white text-xs font-medium px-4 py-2 rounded-lg hover:bg-slate-700 transition"
+                >
+                  Reply
+                </button>
+              </form>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // 各コメントフォームに送信イベントを登録
+      document.querySelectorAll('.comment-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const formEl = e.currentTarget as HTMLFormElement;
+          const postId = formEl.getAttribute('data-post-id');
+          const inputEl = formEl.querySelector('input[name="comment"]') as HTMLInputElement;
+          const content = inputEl.value;
+
+          // 現在ログイン中のユーザーを取得
+          const { data: { user } } = await supabase.auth.getUser();
+          if (!user) {
+            alert('You need to be logged in to comment.');
+            window.location.href = '/login';
+            return;
+          }
+
+          // comments テーブルに挿入
+          const { error } = await supabase.from('comments').insert({
+            post_id: postId,
+            user_id: user.id,
+            content: content
+          });
+
+          if (error) {
+            console.error('Error posting comment:', error);
+            alert('Failed to post the comment.');
+            return;
+          }
+
+          // 成功したら画面を再読み込みして最新状態にする
+          window.location.reload();
+        });
+      });
+    }
+  }
+
+  function escapeHtml(str: string) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/[']/g, '&#039;');
+  }
+
+  fetchPosts();
+</script>

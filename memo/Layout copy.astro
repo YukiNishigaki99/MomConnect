@@ -1,0 +1,101 @@
+---
+// src/layouts/Layout.Astro
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{ title } | MotherConnect</title>
+		<!-- 【重要】最初からページ全体を隠しておく設定 -->
+		<style>
+		main { visibility: hidden; }
+		</style>
+	</head>
+	<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+		<header class="bg-white border-b border-slate-200 shadow-sm">
+			<div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+				<a href="/" class="text-xl font-bold text-pink-600 flex items-center gap-2">
+					MotherConnect
+				</a>
+				<nav class="flex gap-6 text-sm font-medium text-slate-600">
+					<a href="/" class="hover:text-pink-600 transition">Support Board</a>
+					<a href="/posts/new" class="hover:text-pink-600 transition">Request Post</a>
+					<a href="/login" id="auth-link" class="bg-pink-50 text-pink-600 px-3 py-1.5 rounded-lg border border-pink-200 hover:bg-pink-100 transition">Sign In</a>
+				</nav>
+			</div>
+		</header>
+
+		<!-- Main contents -->
+		<main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8">
+			<slot />
+		</main>
+		<footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400">
+			&copy; 2026 MotherConnect - Community Childcare Support
+		</footer>
+		<script>
+			import { supabase } from '../lib/supabase';
+
+			const currentPath = window.location.pathname;
+			const isAuthPage = currentPath === '/login' || currentPath === '/signup';
+
+			const loginLink = document.getElementById('login-link');
+			const logoutBtn = document.getElementById('logout-btn');
+
+			// ユーザーのログイン状態をチェック
+			supabase.auth.getSession().then(({ data: { session } }) => {
+				if (!session) {
+					// 未ログインの場合
+					if (!isAuthPage) {
+						// ログインページ以外ならリダイレクト（中身は見せない）
+						window.location.href = '/login';
+					} else {
+						// ログイン・登録ページなら、ログインボタンを表示し、ページを表示する
+						loginLink?.classList.remove('hidden');
+						logoutBtn?.classList.add('hidden');
+						document.documentElement.style.visibility = 'visible'; // 画面を表示
+					}
+				} else {
+					// ログイン済みの場合
+					if (isAuthPage) {
+						// すでにログインしているのに /login や /signup にいる場合はトップへ戻す
+						window.location.href = '/';
+					} else {
+						// 通常ページならログアウトボタンを表示し、ページを表示する
+						loginLink?.classList.add('hidden');
+						logoutBtn?.classList.remove('hidden');
+						document.documentElement.style.visibility = 'visible'; // 画面を表示
+					}
+				}
+			});
+
+			// ログアウトボタンの処理
+			logoutBtn?.addEventListener('click', async () => {
+				await supabase.auth.signOut();
+				window.location.href = '/login';
+			});
+				
+		</script>
+
+	</body>
+</html>
+
+<style>
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+	}
+</style>

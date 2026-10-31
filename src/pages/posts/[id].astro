@@ -1,0 +1,144 @@
+---
+// src/pages/posts/[id].astro
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = [
+    {
+      id: '1',
+      title: 'Looking for someone to watch my toddler next Wednesday morning',
+      type: 'need',
+      area: 'Shibuya, Tokyo',
+      date: 'Nov 4, 2026 (Wed) 09:00 - 12:00',
+      author: 'Sarah M.',
+      authorRole: 'Requester',
+      content: 'I have a doctor appointment on Wednesday morning and need a trusted neighbor to look after my 2-year-old daughter for about 3 hours at my home or a nearby park.',
+      createdAt: '2 hours ago',
+      comments: [
+        { id: 1, author: 'Emily W.', text: 'I am available that morning! I would love to help out.', createdAt: '1 hour ago' }
+      ]
+    },
+    {
+      id: '2',
+      title: 'Available for after-school child supervision on weekdays',
+      type: 'can',
+      area: 'Shibuya, Tokyo',
+      date: 'Weekdays 15:00 - 18:00',
+      author: 'Elena R.',
+      authorRole: 'Senior Mom',
+      content: 'Experienced mother of two high schoolers. Happy to assist working parents by supervising elementary school kids after school or helping with homework.',
+      createdAt: '1 day ago',
+      comments: []
+    },
+    {
+      id: '3',
+      title: 'Urgent: Emergency pickup from daycare needed due to sudden fever',
+      type: 'need',
+      area: 'Shinjuku, Tokyo',
+      date: 'Today from 15:00',
+      author: 'Jessica T.',
+      authorRole: 'Requester',
+      content: 'I am stuck in an out-of-town meeting and cannot make it to daycare pickup on time. Looking for an authorized community member to help pick up my son.',
+      createdAt: '10 minutes ago',
+      comments: [
+        { id: 1, author: 'Lisa K.', text: 'Hoping everything is okay! I live near the daycare and can head over right now.', createdAt: '5 minutes ago' }
+      ]
+    }
+  ];
+
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const isNeed = post.type === 'need';
+---
+
+<Layout title={post.title}>
+  <div class="max-w-3xl mx-auto space-y-6">
+    <!-- Navigation back link -->
+    <a href="/" class="inline-flex items-center text-xs font-medium text-slate-500 hover:text-pink-600 transition">
+      ← Back to Support Board
+    </a>
+
+    <!-- Main post card -->
+    <article class="bg-white border border-slate-200 rounded-xl p-6 md:p-8 shadow-sm">
+      <div class="flex justify-between items-start mb-4">
+        <span class={`text-xs font-semibold px-3 py-1 rounded-full ${
+          isNeed ? 'bg-pink-100 text-pink-700' : 'bg-emerald-100 text-emerald-700'
+        }`}>
+          {isNeed ? 'Seeking Help' : 'Offering Help'}
+        </span>
+        <span class="text-xs text-slate-400">Posted {post.createdAt}</span>
+      </div>
+
+      <h1 class="text-xl md:text-2xl font-bold text-slate-800 mb-4">{post.title}</h1>
+
+      <!-- Meta information grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 bg-slate-50 p-4 rounded-lg text-xs text-slate-600 mb-6 border border-slate-100">
+        <div><strong class="text-slate-700">Location:</strong> {post.area}</div>
+        <div><strong class="text-slate-700">Date/Time:</strong> {post.date}</div>
+        <div><strong class="text-slate-700">Posted By:</strong> {post.author} ({post.authorRole})</div>
+      </div>
+
+      <!-- Content body -->
+      <div class="prose prose-slate text-sm text-slate-700 leading-relaxed mb-6">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Description</h2>
+        <p class="whitespace-pre-line">{post.content}</p>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-slate-100">
+        <button 
+          type="button" 
+          class="px-5 py-2.5 border border-slate-300 text-slate-700 font-medium rounded-lg text-sm hover:bg-slate-50 transition text-center"
+        >
+          Send Direct Message
+        </button>
+      </div>
+    </article>
+
+    <!-- Comments Section -->
+    <section class="bg-white border border-slate-200 rounded-xl p-6 md:p-8 shadow-sm space-y-6">
+      <h2 class="text-base font-bold text-slate-800">Comments & Offers ({post.comments.length})</h2>
+
+      <!-- Comment List -->
+      <div class="space-y-4">
+        {post.comments.length > 0 ? (
+          post.comments.map((comment) => (
+            <div class="p-4 bg-slate-50 rounded-lg border border-slate-100 space-y-1">
+              <div class="flex justify-between items-center text-xs text-slate-500">
+                <span class="font-semibold text-slate-700">{comment.author}</span>
+                <span>{comment.createdAt}</span>
+              </div>
+              <p class="text-sm text-slate-700">{comment.text}</p>
+            </div>
+          ))
+        ) : (
+          <p class="text-xs text-slate-400 italic">No comments yet. Be the first to reply!</p>
+        )}
+      </div>
+
+      <!-- Add Comment Form -->
+      <form class="space-y-3 pt-4 border-t border-slate-100">
+        <label for="comment" class="block text-xs font-semibold text-slate-700">Leave a comment or reply</label>
+        <textarea 
+          id="comment" 
+          rows="3" 
+          placeholder="Write your message here..." 
+          class="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500"
+        ></textarea>
+        <div class="flex justify-end">
+          <button 
+            type="button" 
+            class="px-4 py-2 bg-pink-600 text-white rounded-lg text-sm font-medium hover:bg-pink-700 transition shadow-sm"
+          >
+            Post Comment
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</Layout>
