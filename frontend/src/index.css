@@ -1,0 +1,206 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.facebook-login-btn {
+    padding: 10px 20px;
+    background-color: #1877f2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.facebook-login-btn:hover {
+    background-color: #165fe6;
+}
+
+.dashboard-container {
+    padding: 40px;
+}
+
+.logout-btn {
+    padding: 8px 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 4px;
+}
+
+.logout-btn:hover {
+    background-color: #d0d0d0;
+}
+
+/* サポートボード用のスタイル */
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.primary-btn {
+    background-color: #ff6b81;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background-color: #ff4757;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    background-color: #e4e6eb;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.tab-btn.active {
+    background-color: #2f3542;
+    color: white;
+}
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.post-card {
+    background: white;
+    padding: 1.2rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #ccc;
+}
+
+.post-card.need_help {
+    border-left-color: #ff6b81;
+    /* 助けてほしいはピンク系 */
+}
+
+.post-card.can_help {
+    border-left-color: #2ed573;
+    /* お手伝いはグリーン系 */
+}
+
+.post-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.75rem;
+}
+
+.badge.need_help {
+    background-color: #ffe0e6;
+    color: #ff4757;
+}
+
+.badge.can_help {
+    background-color: #e1fbe3;
+    color: #2ed573;
+}
+
+.post-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.detail-btn {
+    background: none;
+    border: 1px solid #ced6e0;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #2f3542;
+}
+
+.detail-btn:hover {
+    background-color: #f1f2f6;
+}
+
+/* 新規投稿フォーム用のスタイル */
+.create-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}

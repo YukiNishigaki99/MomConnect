@@ -1,0 +1,15 @@
+# --- Frontend (React / Vite) ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite
+
+# --- Backend (Python / FastAPI) ---
+backend/venv/
+backend/__pycache__/
+backend/.env
+
+# --- OS generated files ---
+.DS_Store
+Thumbs.db
+
+memo

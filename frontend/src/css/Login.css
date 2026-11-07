@@ -1,0 +1,31 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f7f9fa;
+    font-family: sans-serif;
+}
+
+.login-container h1 {
+    color: #ff6b81;
+    margin-bottom: 0.5rem;
+}
+
+.facebook-login-btn {
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: background-color 0.2s;
+}
+
+.facebook-login-btn:hover {
+    background-color: #166fe5;
+}
