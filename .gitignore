@@ -2,6 +2,7 @@
 frontend/node_modules/
 frontend/dist/
 frontend/.vite
+frontend/.env
 
 # --- Backend (Python / FastAPI) ---
 backend/venv/
@@ -14,3 +15,4 @@ backend/atlas-credentials.env
 Thumbs.db
 
 memo
+.vscode/settings.json
