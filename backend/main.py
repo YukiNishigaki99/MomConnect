@@ -14,7 +14,7 @@ class CommentCreate(BaseModel):
 app = FastAPI(title="MotherConnect API")
 
 origins = [
-    "https://motherconnect-bakeoff3.netlify.app/",
+    "https://motherconnect-bakeoff3.netlify.app",
     "http://localhost:5173",
 ]
 
