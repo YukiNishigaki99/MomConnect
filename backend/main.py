@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from .database import client, users_collection
-from models import UserCreate
+from .models import UserCreate
 from bson import ObjectId
 from pydantic import BaseModel
 from typing import Optional, List
