@@ -1,127 +1,166 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import '../index.css';
+import api from '../api';
 import './../css/Dashboard.css';
-
 
 export default function Dashboard() {
     const navigate = useNavigate();
 
-    // ユーザーのモックデータ
-    const user = {
-        name: '山田 花子',
-        role: 'requester', // 'requester' または 'supporter'
-        area: '東京都渋谷区'
+    const [user, setUser] = useState({ name: 'Guest User' });
+    const [posts, setPosts] = useState([]);
+    const [filterType, setFilterType] = useState('all');
+    const [loading, setLoading] = useState(true);
+
+    // Track comment text input per post id: { [postId]: "comment text" }
+    const [commentInputs, setCommentInputs] = useState({});
+
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            setUser(JSON.parse(savedUser));
+        }
+        fetchPosts();
+    }, []);
+
+    const fetchPosts = async () => {
+        try {
+            setLoading(true);
+            const response = await api.get('/posts/');
+            setPosts(response.data);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    // サポートボードのモックデータ（Need Help / Can Help）
-    const [posts, setPosts] = useState([
-        {
-            id: 1,
-            type: 'need_help', // 助けてほしい
-            title: '来週の水曜日、1時間だけ子供を見ていてほしいです',
-            category: '一時預かり・見守り',
-            area: '東京都渋谷区',
-            author: '佐藤 美咲',
-            status: 'open'
-        },
-        {
-            id: 2,
-            type: 'can_help', // お手伝いできる
-            title: '手作りの離乳食の進め方アドバイス・お下がり服の譲渡',
-            category: '相談・お下がり',
-            area: '東京都渋谷区',
-            author: '田中 恵子',
-            status: 'open'
-        },
-        {
-            id: 3,
-            type: 'need_help',
-            title: '近くの小児科への通院同行（下の子も一緒のため）',
-            category: 'お出かけサポート',
-            area: '東京都新宿区',
-            author: '鈴木 由香',
-            status: 'open'
-        }
-    ]);
+    const handleCommentChange = (postId, text) => {
+        setCommentInputs(prev => ({ ...prev, [postId]: text }));
+    };
 
-    // フィルターの状態（'all', 'need_help', 'can_help'）
-    const [filterType, setFilterType] = useState('all');
+    const handleCommentSubmit = async (e, postId) => {
+        e.preventDefault();
+        const text = commentInputs[postId];
+        if (!text || !text.trim()) return;
+
+        try {
+            await api.post(`/posts/${postId}/comments`, {
+                text: text.trim(),
+                author: user.name || 'Anonymous Mom'
+            });
+
+            // Clear input and refresh posts
+            setCommentInputs(prev => ({ ...prev, [postId]: '' }));
+            fetchPosts();
+        } catch (error) {
+            console.error('Error adding comment:', error);
+            alert('Failed to add comment.');
+        }
+    };
 
     const handleLogout = () => {
+        localStorage.removeItem('user');
         navigate('/');
     };
 
-    // フィルターで投稿を絞り込む
-    const filteredPosts = posts.filter(post => {
+    const filteredPosts = posts.filter((post) => {
         if (filterType === 'all') return true;
         return post.type === filterType;
     });
 
     return (
         <div className="dashboard-page">
-            {/* ナビゲーションバー */}
             <nav className="navbar">
-                <h2>MomConnect</h2>
-                <div className="user-info">
-                    <span>{user.area} / {user.name} さん</span>
+                <h2>MotherConnect</h2>
+                <div className="nav-actions">
+                    <span className="welcome-text">Welcome, {user.name}</span>
+                    <button onClick={() => navigate('/create-post')} className="primary-btn">
+                        + Create Post
+                    </button>
                     <button onClick={handleLogout} className="logout-btn">
-                        ログアウト
+                        Logout
                     </button>
                 </div>
             </nav>
 
-            {/* メインエリア */}
             <main className="main-content">
-                <div className="board-header">
-                    <h3>サポートボード</h3>
-                    <button className="primary-btn" onClick={() => navigate('/create-post')}>＋ 新規投稿する</button>
-                </div>
-
-                {/* フィルタータブ */}
-                <div className="filter-tabs">
+                <div className="filter-bar">
                     <button
-                        className={`tab-btn ${filterType === 'all' ? 'active' : ''}`}
+                        className={`filter-btn ${filterType === 'all' ? 'active' : ''}`}
                         onClick={() => setFilterType('all')}
                     >
-                        すべて
+                        All Posts
                     </button>
                     <button
-                        className={`tab-btn ${filterType === 'need_help' ? 'active' : ''}`}
+                        className={`filter-btn ${filterType === 'need_help' ? 'active' : ''}`}
                         onClick={() => setFilterType('need_help')}
                     >
-                        🚨 助けてほしい (Need Help)
+                        🚨 Need Help
                     </button>
                     <button
-                        className={`tab-btn ${filterType === 'can_help' ? 'active' : ''}`}
+                        className={`filter-btn ${filterType === 'can_help' ? 'active' : ''}`}
                         onClick={() => setFilterType('can_help')}
                     >
-                        🤝 お手伝いできる (Can Help)
+                        🤝 Can Help
                     </button>
                 </div>
 
-                {/* 投稿リスト */}
-                <div className="posts-container">
-                    {filteredPosts.length === 0 ? (
-                        <p className="no-posts">該当する投稿はありません。</p>
-                    ) : (
-                        filteredPosts.map(post => (
+                {loading ? (
+                    <p>Loading posts...</p>
+                ) : filteredPosts.length === 0 ? (
+                    <div className="empty-state">
+                        <p>No posts found. Be the first to create one!</p>
+                    </div>
+                ) : (
+                    <div className="posts-grid">
+                        {filteredPosts.map((post) => (
                             <div key={post.id} className={`post-card ${post.type}`}>
-                                <div className="post-meta">
+                                <div className="post-header">
                                     <span className={`badge ${post.type}`}>
-                                        {post.type === 'need_help' ? 'Need Help' : 'Can Help'}
+                                        {post.type === 'need_help' ? '🚨 Need Help' : '🤝 Can Help'}
                                     </span>
-                                    <span className="post-area">📍 {post.area}</span>
+                                    <span className="category-tag">{post.category}</span>
                                 </div>
-                                <h4 className="post-title">{post.title}</h4>
+
+                                <h3 className="post-title">{post.title}</h3>
+                                <p className="post-area">📍 {post.area}</p>
+                                <p className="post-description">{post.description}</p>
+
                                 <div className="post-footer">
-                                    <span className="post-author">投稿者: {post.author}</span>
-                                    <button className="detail-btn">詳細・応募する</button>
+                                    <span className="post-author">Posted by: {post.author}</span>
+                                </div>
+
+                                {/* Comments Section */}
+                                <div className="comments-section">
+                                    <h4>Comments ({post.comments?.length || 0})</h4>
+                                    <div className="comments-list">
+                                        {post.comments && post.comments.length > 0 ? (
+                                            post.comments.map((comment, index) => (
+                                                <div key={index} className="comment-item">
+                                                    <strong>{comment.author}: </strong>
+                                                    <span>{comment.text}</span>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p className="no-comments">No comments yet. Start the conversation!</p>
+                                        )}
+                                    </div>
+
+                                    <form onSubmit={(e) => handleCommentSubmit(e, post.id)} className="comment-form">
+                                        <input
+                                            type="text"
+                                            placeholder="Write a comment..."
+                                            value={commentInputs[post.id] || ''}
+                                            onChange={(e) => handleCommentChange(post.id, e.target.value)}
+                                            required
+                                        />
+                                        <button type="submit" className="comment-submit-btn">Post</button>
+                                    </form>
                                 </div>
                             </div>
-                        ))
-                    )}
-                </div>
+                        ))}
+                    </div>
+                )}
             </main>
         </div>
     );

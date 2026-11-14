@@ -1,29 +1,48 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import '../index.css';
+import api from '../api';
 import './../css/Dashboard.css';
 import './../css/CreatePost.css';
-
 
 export default function CreatePost() {
     const navigate = useNavigate();
 
+    // Form state management
     const [postType, setPostType] = useState('need_help');
     const [title, setTitle] = useState('');
-    const [category, setCategory] = useState('一時預かり・見守り');
-    const [area, setArea] = useState('東京都渋谷区');
+    const [category, setCategory] = useState('Temporary Childcare / Monitoring');
+    const [area, setArea] = useState('Shibuya-ku, Tokyo');
     const [description, setDescription] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        // Inside handleSubmit in CreatePost.jsx
+        const savedUser = JSON.parse(localStorage.getItem('user'));
+        const authorName = savedUser?.name || 'Anonymous Mom';
+
         e.preventDefault();
         if (!title.trim()) {
-            alert('タイトルを入力してください');
+            alert('Please enter a title.');
             return;
         }
 
-        // 本来はここでバックエンド (FastAPI) へ API リクエストを送ります
-        alert('投稿が完了しました！');
-        navigate('/dashboard');
+        try {
+            // Send POST request to FastAPI backend
+            const response = await api.post('/posts/', {
+                type: postType,
+                title: title,
+                category: category,
+                area: area,
+                description: description,
+                author: authorName
+            });
+
+            console.log("Post created successfully:", response.data);
+            alert('Post created successfully!');
+            navigate('/dashboard');
+        } catch (error) {
+            console.error("Failed to create post:", error.response?.data?.detail || error.message);
+            alert("Failed to create post. Please try again.");
+        }
     };
 
     return (
@@ -31,16 +50,16 @@ export default function CreatePost() {
             <nav className="navbar">
                 <h2>MomConnect</h2>
                 <button onClick={() => navigate('/dashboard')} className="logout-btn">
-                    キャンセル
+                    Cancel
                 </button>
             </nav>
 
             <main className="main-content">
                 <div className="card">
-                    <h3>新規投稿の作成</h3>
+                    <h3>Create New Post</h3>
                     <form onSubmit={handleSubmit} className="create-post-form">
                         <div className="form-group">
-                            <label>投稿のタイプ</label>
+                            <label>Post Type</label>
                             <div className="radio-group">
                                 <label className="radio-label">
                                     <input
@@ -50,7 +69,7 @@ export default function CreatePost() {
                                         checked={postType === 'need_help'}
                                         onChange={(e) => setPostType(e.target.value)}
                                     />
-                                    🚨 助けてほしい (Need Help)
+                                    🚨 Need Help
                                 </label>
                                 <label className="radio-label">
                                     <input
@@ -60,17 +79,17 @@ export default function CreatePost() {
                                         checked={postType === 'can_help'}
                                         onChange={(e) => setPostType(e.target.value)}
                                     />
-                                    🤝 お手伝いできる (Can Help)
+                                    🤝 Can Help
                                 </label>
                             </div>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="title">タイトル</label>
+                            <label htmlFor="title">Title</label>
                             <input
                                 id="title"
                                 type="text"
-                                placeholder="例: 来週の水曜日、1時間ほど見守りをお願いしたいです"
+                                placeholder="e.g., Looking for someone to watch my child next Wednesday for an hour"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 required
@@ -78,21 +97,21 @@ export default function CreatePost() {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="category">カテゴリー</label>
+                            <label htmlFor="category">Category</label>
                             <select
                                 id="category"
                                 value={category}
                                 onChange={(e) => setCategory(e.target.value)}
                             >
-                                <option value="一時預かり・見守り">一時預かり・見守り</option>
-                                <option value="お出かけサポート">お出かけサポート</option>
-                                <option value="相談・お下がり">相談・お下がり</option>
-                                <option value="家事手伝い">家事手伝い</option>
+                                <option value="Temporary Childcare / Monitoring">Temporary Childcare / Monitoring</option>
+                                <option value="Outing Support">Outing Support</option>
+                                <option value="Advice / Hand-me-downs">Advice / Hand-me-downs</option>
+                                <option value="Housework Assistance">Housework Assistance</option>
                             </select>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="area">対象エリア (市区町村)</label>
+                            <label htmlFor="area">Target Area (City / Ward)</label>
                             <input
                                 id="area"
                                 type="text"
@@ -103,11 +122,11 @@ export default function CreatePost() {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="description">詳しい内容</label>
+                            <label htmlFor="description">Detailed Description</label>
                             <textarea
                                 id="description"
                                 rows="5"
-                                placeholder="希望日時や具体的なサポート内容を記入してください"
+                                placeholder="Please enter preferred dates and specific details regarding the support needed"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             ></textarea>
@@ -115,7 +134,7 @@ export default function CreatePost() {
 
                         <div className="form-actions">
                             <button type="submit" className="primary-btn">
-                                投稿する
+                                Submit Post
                             </button>
                         </div>
                     </form>
