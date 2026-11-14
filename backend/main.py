@@ -1,11 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from .database import client, users_collection
+from .database import client, users_collection, db
 from .models import UserCreate
 from bson import ObjectId
 from pydantic import BaseModel
 from typing import Optional, List
-from database import db
 
 # Pydantic model for comments
 class CommentCreate(BaseModel):
