@@ -1,0 +1,5 @@
+/*
+  Content-Type: application/javascript; charset=utf-8
+  # 拡張子が .js のファイルのMIMEタイプを強制する設定
+/assets/*.js
+  Content-Type: application/javascript; charset=utf-8
